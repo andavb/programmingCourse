@@ -9,13 +9,32 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Racun {
+public class Racun implements Searchable{
 
     private UUID ID;
     private Date datum;
     private Artikli seznam;
+    private Podjetje izdajatelj;
+    private String davcnaStevilka;
 
-    public Racun(Date datum, Artikli seznam) {
+
+    public Podjetje getIzdajatelj() {
+        return izdajatelj;
+    }
+
+    public void setIzdajatelj(Podjetje izdajatelj) {
+        this.izdajatelj = izdajatelj;
+    }
+
+    public String getDavcnaStevilka() {
+        return davcnaStevilka;
+    }
+
+    public void setDavcnaStevilka(String davcnaStevilka) {
+        this.davcnaStevilka = "SI" + davcnaStevilka;
+    }
+
+    public Racun(Date datum, Artikli seznam, Podjetje izd, String davc) {
         SimpleDateFormat dateF = new SimpleDateFormat("ddMMyyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("hhmm");
         SimpleDateFormat secondF = new SimpleDateFormat("ssss");
@@ -24,7 +43,13 @@ public class Racun {
         this.ID = UUID.fromString(dateF.format(datum)+"-"+timeF.format(datum)+"-"+secondF.format(datum)+"-b000-000000"+millisecondF.format(datum));
         this.datum = datum;
         this.seznam = seznam;
-        Barcode_PDF.createPDF(this.ID+".png", ID.toString());
+        this.izdajatelj = izd;
+        this.davcnaStevilka = "SI" + davc;
+        //Barcode_PDF.createPDF(this.ID+".png", ID.toString());
+
+        if (!aliJeDavcniZavezanec(this.izdajatelj)){
+            System.out.println("Davcni stevili se ne ujemata");
+        }
     }
 
     public UUID getID() {
@@ -97,5 +122,63 @@ public class Racun {
 
     public void odstraniArtikel(Artikel a){
         this.seznam.odstraniArtikel(a);
+    }
+
+    public void printajRacun(){
+        System.out.println("___________________________________________________");
+        System.out.println("Izdelek             Kolicina    Cena za kos     DDV");
+
+        for (Artikel pomozni: this.getSeznam().getArtikli()){
+
+            System.out.print(pomozni.getIme());
+            for(int i=pomozni.getIme().length(); i<27; i++){
+                System.out.print(" ");
+            }
+            System.out.print(pomozni.getKolicina());
+            System.out.print("           ");
+            System.out.print(pomozni.getCena());
+            System.out.print("     ");
+            System.out.println(pomozni.getDavcnaStopnja());
+
+        }
+        System.out.println();
+        System.out.println("Skupaj cena brez DDV:  "+this.GenerirajCenoRacuna()+" €");
+        System.out.println("Skupaj cena z DDV:  "+this.GenerirajCenoRacunaZDDV()+" €\n");
+
+
+        SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        System.out.println("Datum: "+dt.format(this.getDatum()));
+
+        System.out.println("ID racuna: "+this.getID().toString());
+        System.out.println("Izdajatelj: "+this.getIzdajatelj().getIme().toString());
+        System.out.println("Davcna stevilka: "+this.getDavcnaStevilka().toString());
+        System.out.println("___________________________________________________");
+    }
+
+    @Override
+    public boolean search(String t) {
+        if(t.equals(this.ID)){
+            return true;
+        }
+        else if(t.equals(this.datum)){
+            return true;
+        }
+        else if(t.equals(this.davcnaStevilka)){
+            return true;
+        }
+        else if(t.equals(this.izdajatelj.getIme())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean aliJeDavcniZavezanec(Podjetje izd){
+        if(this.davcnaStevilka.equals(izd.getDavcnaStevilka())){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
