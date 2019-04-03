@@ -1,6 +1,6 @@
 package Artikel_racun;
 
-public class Podjetje {
+public class Podjetje implements Searchable{
     private String ime;
     private  String davcnaStevilka;
     private String maticnaStevilka;
@@ -58,7 +58,26 @@ public class Podjetje {
         return davcniZavezanec;
     }
 
-    public void setDavcniZavezanec(boolean davcniZavezanec) {
+                        public void setDavcniZavezanec(boolean davcniZavezanec) {
         this.davcniZavezanec = davcniZavezanec;
+    }
+
+    @Override
+    public boolean search(String t) {
+        if(t.contains(this.ime)){
+            return true;
+        }
+        else if(t.contains(this.davcnaStevilka)){
+            return true;
+        }
+        else if(t.contains(this.maticnaStevilka)){
+            return true;
+        }
+        else if(t.contains(Boolean.toString(this.davcniZavezanec))){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

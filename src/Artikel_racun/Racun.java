@@ -16,7 +16,7 @@ public class Racun implements Searchable{
     private Artikli seznam;
     private Podjetje izdajatelj;
     private String davcnaStevilka;
-
+    private String davcnaStevilkaKupca;
 
     public Podjetje getIzdajatelj() {
         return izdajatelj;
@@ -45,6 +45,7 @@ public class Racun implements Searchable{
         this.seznam = seznam;
         this.izdajatelj = izd;
         this.davcnaStevilka = "SI" + davc;
+        this.davcnaStevilkaKupca = "";
         //Barcode_PDF.createPDF(this.ID+".png", ID.toString());
 
         if (!aliJeDavcniZavezanec(this.izdajatelj)){
@@ -74,6 +75,14 @@ public class Racun implements Searchable{
 
     public void setSeznam(Artikli seznam) {
         this.seznam = seznam;
+    }
+
+    public String getDavcnaStevilkaKupca() {
+        return davcnaStevilkaKupca;
+    }
+
+    public void setDavcnaStevilkaKupca(String davcnaStevilkaKupca) {
+        this.davcnaStevilkaKupca = davcnaStevilkaKupca;
     }
 
     public BigDecimal GenerirajCenoRacuna(){
@@ -157,16 +166,16 @@ public class Racun implements Searchable{
 
     @Override
     public boolean search(String t) {
-        if(t.equals(this.ID)){
+        if(t.contains(this.ID.toString())){
             return true;
         }
-        else if(t.equals(this.datum)){
+        else if(t.contains(this.datum.toString())){
             return true;
         }
-        else if(t.equals(this.davcnaStevilka)){
+        else if(t.contains(this.davcnaStevilka)){
             return true;
         }
-        else if(t.equals(this.izdajatelj.getIme())){
+        else if(t.contains(this.izdajatelj.getIme())){
             return true;
         }
         else{

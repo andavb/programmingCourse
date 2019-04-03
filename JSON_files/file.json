@@ -1,0 +1,60 @@
+{
+  "artikli": [
+    {
+      "EAN": "2116789020102",
+      "ime": "Kruh",
+      "cena": 2.34,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Slovenija"
+    },
+    {
+      "EAN": "2058232100202",
+      "ime": "Meso",
+      "cena": 3.34,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Slovenija"
+    },
+    {
+      "EAN": "0002002100112",
+      "ime": "Zobna pasta",
+      "cena": 3.19,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Nemčija"
+    },
+    {
+      "EAN": "0003001000112",
+      "ime": "Pašteta Argeta",
+      "cena": 0.99,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Nemčija"
+    },
+    {
+      "EAN": "0002302000113",
+      "ime": "Šampon",
+      "cena": 4.79,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Hrvaška"
+    },
+    {
+      "EAN": "0001002000114",
+      "ime": "Kosmiči",
+      "cena": 3.55,
+      "davcnaStopnja": 9.5,
+      "kolicina": 1,
+      "drzava": "Italija"
+    },
+    {
+      "EAN": "0001002000115",
+      "ime": "Ciki",
+      "cena": 3.60,
+      "davcnaStopnja": 22.0,
+      "kolicina": 2,
+      "drzava": "Avstrija"
+    }
+  ]
+}

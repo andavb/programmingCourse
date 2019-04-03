@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Artikel implements Searchable{
 
-    private long EAN;
+    private String EAN;
     private String ime;
     private BigDecimal cena;
     private double davcnaStopnja;
@@ -21,11 +21,30 @@ public class Artikel implements Searchable{
         this.kolicina = kolicina;
     }
 
-    public Artikel(String ime, BigDecimal cena, double davcnaStopnja, String drzava) {
+    public Artikel(String id, String ime, BigDecimal cena, double davcnaStopnja, String drzava) {
 
-        UUID code = UUID.randomUUID();
+        /*UUID code = UUID.randomUUID();
         long id = Math.abs(code.hashCode());
-        id += 11000000000L;
+
+        if(drzava.equals("Slovenija")){
+            id += 11000000000L;
+        }
+        else if(drzava.equals("Nemčija")){
+            id += 21000000000L;
+        }
+        else if(drzava.equals("Avstrija")){
+            id += 31000000000L;
+        }
+        else if(drzava.equals("Hrvaška")){
+            id += 41000000000L;
+        }
+        else if(drzava.equals("Italija")){
+            id += 51000000000L;
+        }
+        else
+        {
+            id += 91000000000L;
+        }*/
 
         this.EAN = id;
         this.ime = ime;
@@ -44,11 +63,11 @@ public class Artikel implements Searchable{
         this.drzava = q.getDrzava();
     }
 
-    public long getEAN() {
+    public String getEAN() {
         return EAN;
     }
 
-    public void setEAN(long EAN) {
+    public void setEAN(String EAN) {
         this.EAN = EAN;
     }
 
@@ -100,13 +119,13 @@ public class Artikel implements Searchable{
 
     @Override
     public boolean search(String t) {
-        if(t.equals(this.EAN)){
+        if(t.contains(this.getEAN())){
             return true;
         }
-        else if(t.equals(this.ime)){
+        else if(t.contains(this.ime)){
             return true;
         }
-        else if(t.equals(this.cena)){
+        else if(t.contains(this.cena.toString())){
             return true;
         }
         else{
@@ -114,25 +133,26 @@ public class Artikel implements Searchable{
         }
     }
 
-    static public boolean checkDigit(long koda, int v){
+    static public boolean checkDigit(String koda, int v){
         int sestevek = 0;
-        long stevilo = 0;
+        int stevilo = 0;
         int pomozno = 0;
         int rezultat = 0;
         int stevec = 1;
+        int i = koda.length();
 
-        while (koda > 0) {
-            stevilo = koda % 10;
 
+        while (i >0) {
+            stevilo = Integer.parseInt(""+koda.charAt(i-1));
             if(stevec % 2 == 0){
                 sestevek += stevilo*1;
             }
             else{
                 sestevek += stevilo*3;
             }
-            koda = koda / 10;
 
             stevec++;
+            i--;
         }
 
         pomozno = (int)Math.ceil(sestevek / 10.0)*10;
@@ -146,6 +166,54 @@ public class Artikel implements Searchable{
         else{
             return false;
         }
+    }
+
+    public String novaTeza(String teza){
+        String koda = this.getEAN();
+        char[] nova = koda.toCharArray();
+        int i=7;
+        int j=0;
+        System.out.println(koda);
+        if(koda.charAt(12) == '2' && teza.length() == 5){
+            while (i < 12) {
+                nova[i] = teza.charAt(j);
+                j++;
+                i++;
+            }
+
+            this.setEAN(String.valueOf(nova));
+
+            return this.getEAN();
+        }
+
+        return null;
+    }
+
+    public void razberiEAN(){
+        String koda = this.getEAN();
+        char[] nova = koda.toCharArray();
+        String oddelek = "";
+        String id = "";
+        String teza = "";
+        String chechDigit = String.valueOf(koda.charAt(12));
+
+        int i=0;
+
+        while (i < 13) {
+            if(i <= 2 && i >= 0){
+                oddelek += String.valueOf(nova[i]);
+            }
+            else if(i <= 6 && i >= 3){
+                id += String.valueOf(nova[i]);
+            }
+            else if(i <= 11 && i >= 7){
+                teza += String.valueOf(nova[i]);
+            }
+            i++;
+        }
+
+        System.out.println("Oddelek: " + oddelek + " Id: " + id + " Teza: " + teza + "g CheckDigit: " + chechDigit);
+
     }
 
 }

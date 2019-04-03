@@ -1,9 +1,11 @@
 package Artikel_racun;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Artikli {
+public class Artikli implements JsonSupport{
 
     private List<Artikel> artikli;
 
@@ -56,5 +58,21 @@ public class Artikli {
         this.artikli = artikli;
     }
 
+    @Override
+    public String toJson() {
+        Gson g = new Gson();
+        String n = g.toJson(this);
 
+        return n;
+    }
+
+    @Override
+    public Artikli fromJson(String podatki) {
+        Gson g = new Gson();
+
+
+        Artikli n = g.fromJson(podatki, Artikli.class);
+
+        return n;
+    }
 }
