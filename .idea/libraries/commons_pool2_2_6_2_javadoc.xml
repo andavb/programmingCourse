@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="commons-pool2-2.6.2-javadoc">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/commons-pool2-2.6.2/commons-pool2-2.6.2-tests.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-pool2-2.6.2/commons-pool2-2.6.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Downloads/commons-pool2-2.6.2/commons-pool2-2.6.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/commons-pool2-2.6.2/commons-pool2-2.6.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-pool2-2.6.2/commons-pool2-2.6.2-test-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

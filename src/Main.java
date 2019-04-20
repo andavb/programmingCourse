@@ -1,17 +1,19 @@
 import Artikel_racun.*;
+import si.um.feri.database.DBHelper;
 
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
-
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         Podjetje tus = new Podjetje("Engrotuš d. o. o.", "87927497", "5494516000", true);
         Podjetje spar = new Podjetje("SPAR SLOVENIJA d.o.o.", "32156782", "5571693000", true);
@@ -88,10 +90,32 @@ public class Main {
 
         String s = Helper.branjeJSONdatotek("/Users/andrejavbelj/IdeaProjects/vaja1/JSON_files/file.json");
 
-        System.out.println(s);
+        System.out.println("Json: " + s);
 
-        System.out.println(banane.novaTeza("01001"));
+        System.out.println(banane.novaTeza("01001"));//TODO checkdigit morm posodobt
 
         banane.razberiEAN();
+
+
+        try (BasicDataSource dataSource = DBHelper.getDataSource();
+             Connection connection = dataSource.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM actor");)
+        {
+            System.out.println("The Connection Object is of Class: "+connection.getClass());
+            try (ResultSet resultSet = pstmt.executeQuery();)
+            {
+                while (resultSet.next())
+                {
+                    System.out.println(resultSet.getString(1) + "," + resultSet.getString(2) + "," + resultSet.getString(3));
+                }
+            }
+            catch (Exception e)
+            {
+                connection.rollback();
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }

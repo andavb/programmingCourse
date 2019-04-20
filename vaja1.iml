@@ -10,5 +10,9 @@
     <orderEntry type="library" name="barcode4j" level="project" />
     <orderEntry type="library" name="itextpdf-5.1.0" level="project" />
     <orderEntry type="library" name="gson-2.8.5" level="project" />
+    <orderEntry type="library" name="commons-dbcp2-2.6.0-javadoc" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.15" level="project" />
+    <orderEntry type="library" name="commons-logging-1.2-javadoc" level="project" />
+    <orderEntry type="library" name="commons-pool2-2.6.2-javadoc" level="project" />
   </component>
 </module>
